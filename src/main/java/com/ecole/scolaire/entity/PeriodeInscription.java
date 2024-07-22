@@ -24,4 +24,6 @@ public class PeriodeInscription {
     private Boolean statut;
     @OneToMany(mappedBy = "periodeInscription")
     private List<Inscription> inscriptions;
+    @Column(columnDefinition = "boolean default false")
+    private boolean etat;
 }

@@ -39,18 +39,18 @@ public class InscriptionServiceImpl implements InscriptionService{
     public Inscription saveInscription(InscriptionDto inscriptionDto) {
         validateInscriptionData(inscriptionDto);
 
-        Etudiant etudiant = etudiantRepository.findById(inscriptionDto.getEtudiantId())
+        Etudiant etudiant = etudiantRepository.findById(inscriptionDto.getEtudiantIdDto())
                 .orElseThrow(() -> new GeneralExceptions.InvalidInscriptionDataException("Etudiant ID invalide."));
 
-        Classe classe = classeRepository.findById(inscriptionDto.getClasseId())
+        Classe classe = classeRepository.findById(inscriptionDto.getClasseIdDto())
                 .orElseThrow(() -> new GeneralExceptions.InvalidInscriptionDataException("Classe ID invalide."));
 
-        PeriodeInscription periodeInscription = periodeInscriptionRepository.findById(inscriptionDto.getPeriodeInscriptionId())
+        PeriodeInscription periodeInscription = periodeInscriptionRepository.findById(inscriptionDto.getPeriodeInscriptionIdDto())
                 .orElseThrow(() -> new GeneralExceptions.InvalidInscriptionDataException("Période d'inscription ID invalide."));
 
         // Validate the date is within the period interval
-        if (inscriptionDto.getDate().before(periodeInscription.getDateDebut()) ||
-                inscriptionDto.getDate().after(periodeInscription.getDateFin())) {
+        if (inscriptionDto.getDateDto().before(periodeInscription.getDateDebut()) ||
+                inscriptionDto.getDateDto().after(periodeInscription.getDateFin())) {
             throw new GeneralExceptions.InvalidInscriptionDataException("La date d'inscription n'est pas dans l'intervalle de la période d'inscription.");
         }
 
@@ -69,16 +69,16 @@ public class InscriptionServiceImpl implements InscriptionService{
     }
 
     private void validateInscriptionData(InscriptionDto inscriptionDto) {
-        if (inscriptionDto.getDate() == null) {
+        if (inscriptionDto.getDateDto() == null) {
             throw new ValidationExceptions.MissingFieldException("La date d'inscription est obligatoire.");
         }
-        if (inscriptionDto.getEtudiantId() == null) {
+        if (inscriptionDto.getEtudiantIdDto() == null) {
             throw new ValidationExceptions.MissingFieldException("L'ID de l'étudiant est obligatoire.");
         }
-        if (inscriptionDto.getClasseId() == null) {
+        if (inscriptionDto.getClasseIdDto() == null) {
             throw new ValidationExceptions.MissingFieldException("L'ID de la classe est obligatoire.");
         }
-        if (inscriptionDto.getPeriodeInscriptionId() == null) {
+        if (inscriptionDto.getPeriodeInscriptionIdDto() == null) {
             throw new ValidationExceptions.MissingFieldException("L'ID de la période d'inscription est obligatoire.");
         }
     }

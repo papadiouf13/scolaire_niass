@@ -12,4 +12,5 @@ public interface EtudiantRepository extends JpaRepository<Etudiant,Long> {
 
     long countByEmail(String email);
     List<Etudiant> findByMatricule(String matricule);
+    List<Etudiant> findByEtatFalse();
 }

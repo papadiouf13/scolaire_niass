@@ -3,6 +3,7 @@ package com.ecole.scolaire.services;
 import com.ecole.scolaire.dtos.ClasseDto;
 import com.ecole.scolaire.entity.Classe;
 import com.ecole.scolaire.entity.Filiere;
+import com.ecole.scolaire.entity.Inscription;
 import com.ecole.scolaire.exceptions.AlreadyExistsExceptions;
 import com.ecole.scolaire.exceptions.GeneralExceptions;
 import com.ecole.scolaire.mapper.ClasseMapper;
@@ -94,19 +95,31 @@ public class ClasseServiceImpl implements ClasseService{
         return classeRepository.save(updatedClasse);
     }
 
-    @Transactional
     @Override
     public void deleteClasse(Long id) {
-        Classe classe = classeRepository.findById(id).orElseThrow(() -> new GeneralExceptions.InvalidClasseDataException("Classe non trouvée."));
+        Classe classe = classeRepository.findById(id)
+                .orElseThrow(() -> new GeneralExceptions.InvalidClasseDataException("Classe non trouvée."));
 
-        inscriptionRepository.deleteByClasseId(classe.getId());
-        classeRepository.delete(classe);
+        classe.setEtat(true);
+        classeRepository.save(classe);
+        List<Inscription> inscriptions = inscriptionRepository.findByClasseId(classe.getId());
+        for (Inscription inscription : inscriptions) {
+            inscription.setEtat(true);
+            inscriptionRepository.save(inscription);
+        }
     }
+
     @Override
     public List<ClasseDto> getAllClasses() {
-        List<Classe> classes = classeRepository.findAll();
+        List<Classe> classes = classeRepository.findByEtatFalse();
         return classes.stream()
                 .map(classeMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ClasseDto> getClassesByFiliere(Long filiereId) {
+        List<Classe> classes = classeRepository.findByFiliereId(filiereId);
+        return classes.stream().map(classeMapper::toDto).collect(Collectors.toList());
     }
 }

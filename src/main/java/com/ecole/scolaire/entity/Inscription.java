@@ -19,6 +19,8 @@ public class Inscription {
 
     @Temporal(TemporalType.DATE)
     private Date date;
+    @Column(columnDefinition = "boolean default false")
+    private boolean etat;
 
     @ManyToOne
     @JoinColumn(name = "etudiant_id")
@@ -31,6 +33,5 @@ public class Inscription {
     @ManyToOne
     @JoinColumn(name = "periode_inscription_id")
     private PeriodeInscription periodeInscription;
-
 
 }

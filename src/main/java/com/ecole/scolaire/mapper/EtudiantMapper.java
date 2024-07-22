@@ -18,6 +18,7 @@ public class EtudiantMapper {
                 .dateNaissance(String.valueOf(LocalDate.parse(etudiantDto.getDateNaissanceDto())))
                 .adresse(etudiantDto.getAdresseDto())
                 .inscriptions(etudiantDto.getInscriptionsDto())
+                .etat(etudiantDto.isEtatDto())
                 .build();
     }
 
@@ -32,6 +33,7 @@ public class EtudiantMapper {
                 .dateNaissanceDto(etudiant.getDateNaissance())
                 .adresseDto(etudiant.getAdresse())
                 .inscriptionsDto(etudiant.getInscriptions())
+                .etatDto(etudiant.isEtat())
                 .build();
     }
 }

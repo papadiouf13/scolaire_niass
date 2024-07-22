@@ -14,8 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class InscriptionDto {
     private Long idDto;
-    private Long etudiantId;
-    private Long classeId;
-    private Long periodeInscriptionId;
-    private Date date;
+    private Long etudiantIdDto;
+    private Long classeIdDto;
+    private Long periodeInscriptionIdDto;
+    private Date dateDto;
+    private boolean etatDto;
 }

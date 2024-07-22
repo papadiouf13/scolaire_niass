@@ -17,4 +17,5 @@ public class ClasseDto {
     private Double mensualiteDto;
     private Double autresFraisDto;
     private Long filiereIdDto;
+    private boolean etatDto;
 }

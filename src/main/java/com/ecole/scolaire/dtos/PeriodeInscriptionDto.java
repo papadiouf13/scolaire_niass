@@ -14,10 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PeriodeInscriptionDto {
-    private Long id;
-    private String anneeScolaire;
-    private Date dateDebut;
-    private Date dateFin;
-    private Boolean statut;
-    private List<Inscription> inscriptions;
+    private Long idDto;
+    private String anneeScolaireDto;
+    private Date dateDebutDto;
+    private Date dateFinDto;
+    private Boolean statutDto;
+    private List<Inscription> inscriptionsDto;
+    private boolean etatDto;
 }

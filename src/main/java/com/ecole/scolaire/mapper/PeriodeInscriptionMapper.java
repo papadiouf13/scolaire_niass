@@ -8,23 +8,25 @@ import org.springframework.stereotype.Component;
 public class PeriodeInscriptionMapper {
     public PeriodeInscriptionDto toDto(PeriodeInscription periodeInscription) {
         return PeriodeInscriptionDto.builder()
-                .id(periodeInscription.getId())
-                .anneeScolaire(periodeInscription.getAnneeScolaire())
-                .dateDebut(periodeInscription.getDateDebut())
-                .dateFin(periodeInscription.getDateFin())
-                .statut(periodeInscription.getStatut())
-                .inscriptions(periodeInscription.getInscriptions())
+                .idDto(periodeInscription.getId())
+                .anneeScolaireDto(periodeInscription.getAnneeScolaire())
+                .dateDebutDto(periodeInscription.getDateDebut())
+                .dateFinDto(periodeInscription.getDateFin())
+                .statutDto(periodeInscription.getStatut())
+                .inscriptionsDto(periodeInscription.getInscriptions())
+                .etatDto(periodeInscription.isEtat())
                 .build();
     }
 
     public PeriodeInscription toEntity(PeriodeInscriptionDto periodeInscriptionDto) {
         return PeriodeInscription.builder()
-                .id(periodeInscriptionDto.getId())
-                .anneeScolaire(periodeInscriptionDto.getAnneeScolaire())
-                .dateDebut(periodeInscriptionDto.getDateDebut())
-                .dateFin(periodeInscriptionDto.getDateFin())
-                .statut(periodeInscriptionDto.getStatut())
-                .inscriptions(periodeInscriptionDto.getInscriptions())
+                .id(periodeInscriptionDto.getIdDto())
+                .anneeScolaire(periodeInscriptionDto.getAnneeScolaireDto())
+                .dateDebut(periodeInscriptionDto.getDateDebutDto())
+                .dateFin(periodeInscriptionDto.getDateFinDto())
+                .statut(periodeInscriptionDto.getStatutDto())
+                .inscriptions(periodeInscriptionDto.getInscriptionsDto())
+                .etat(periodeInscriptionDto.isEtatDto())
                 .build();
     }
 }

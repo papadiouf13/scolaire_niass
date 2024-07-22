@@ -22,10 +22,10 @@ public class PeriodeInscriptionServiceImpl implements PeriodeInscriptionService{
 
     @Override
     public PeriodeInscription addPeriodeInscription(PeriodeInscriptionDto periodeInscriptionDto) {
-        String anneeScolaire = periodeInscriptionDto.getAnneeScolaire();
-        Date dateDebut = periodeInscriptionDto.getDateDebut();
-        Date dateFin = periodeInscriptionDto.getDateFin();
-        Boolean statut = periodeInscriptionDto.getStatut();
+        String anneeScolaire = periodeInscriptionDto.getAnneeScolaireDto();
+        Date dateDebut = periodeInscriptionDto.getDateDebutDto();
+        Date dateFin = periodeInscriptionDto.getDateFinDto();
+        Boolean statut = periodeInscriptionDto.getStatutDto();
 
         if (anneeScolaire == null || anneeScolaire.isEmpty()) {
             throw new ValidationExceptions.MissingFieldException("L'année scolaire est obligatoire");

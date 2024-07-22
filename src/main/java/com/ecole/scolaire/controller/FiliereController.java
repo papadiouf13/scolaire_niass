@@ -3,6 +3,7 @@ package com.ecole.scolaire.controller;
 import com.ecole.scolaire.dtos.FiliereDto;
 import com.ecole.scolaire.entity.Filiere;
 import com.ecole.scolaire.exceptions.AlreadyExistsExceptions;
+import com.ecole.scolaire.exceptions.ValidationExceptions;
 import com.ecole.scolaire.services.FiliereService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,8 +42,12 @@ public class FiliereController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteFiliere(@PathVariable Long id) {
-        filiereService.deleteFiliere(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteFiliere(@PathVariable Long id) {
+        try {
+            filiereService.deleteFiliere(id);
+            return ResponseEntity.ok("Filiere supprimée avec succès.");
+        } catch (ValidationExceptions.NotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 }

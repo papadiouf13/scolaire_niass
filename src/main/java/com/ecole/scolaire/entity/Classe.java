@@ -30,4 +30,6 @@ public class Classe {
 
     @OneToMany(mappedBy = "classe")
     private List<Inscription> inscriptions;
+    @Column(columnDefinition = "boolean default false")
+    private boolean etat;
 }

@@ -10,6 +10,7 @@ public class FiliereMapper {
         return Filiere.builder()
                 .id(filiereDto.getIdDto())
                 .libelle(filiereDto.getLibelleDto())
+                .etat(filiereDto.isEtatDto())
                 .build();
     }
 
@@ -17,6 +18,7 @@ public class FiliereMapper {
         return FiliereDto.builder()
                 .idDto(filiere.getId())
                 .libelleDto(filiere.getLibelle())
+                .etatDto(filiere.isEtat())
                 .build();
     }
 }

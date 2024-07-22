@@ -26,4 +26,5 @@ public class EtudiantDto {
     private String adresseDto;
     @JsonBackReference
     private List<Inscription> inscriptionsDto;
+    private boolean etatDto;
 }

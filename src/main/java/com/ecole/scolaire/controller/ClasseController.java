@@ -53,4 +53,10 @@ public class ClasseController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<ClasseDto>> getClassesByFiliere(@RequestParam Long filiereId) {
+        List<ClasseDto> classeDtos = classeService.getClassesByFiliere(filiereId);
+        return new ResponseEntity<>(classeDtos, HttpStatus.OK);
+    }
 }

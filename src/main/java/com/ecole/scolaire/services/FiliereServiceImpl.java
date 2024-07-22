@@ -30,7 +30,7 @@ public class FiliereServiceImpl implements FiliereService{
 
     @Override
     public List<FiliereDto> getAllFilieres() {
-        List<Filiere> filieres = filiereRepository.findAll();
+        List<Filiere> filieres = filiereRepository.findByEtatFalse();
         return filieres.stream()
                 .map(filiereMapper::toDto)
                 .collect(Collectors.toList());
@@ -51,8 +51,8 @@ public class FiliereServiceImpl implements FiliereService{
 
     @Override
     public void deleteFiliere(Long id) {
-        Filiere filiere = filiereRepository.findById(id)
-                .orElseThrow(() -> new ValidationExceptions.NotFoundException("Filiere not found with id: " + id));
-        filiereRepository.delete(filiere);
+        Filiere filiere = filiereRepository.findById(id).orElseThrow(() -> new ValidationExceptions.NotFoundException("Filiere not found with id: " + id));
+        filiere.setEtat(true);
+        filiereRepository.save(filiere);
     }
 }

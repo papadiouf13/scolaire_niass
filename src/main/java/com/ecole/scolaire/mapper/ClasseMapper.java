@@ -16,6 +16,7 @@ public class ClasseMapper {
                 .mensualite(classeDto.getMensualiteDto())
                 .autresFrais(classeDto.getAutresFraisDto())
                 .filiere(classeDto.getFiliereIdDto() != null ? Filiere.builder().id(classeDto.getFiliereIdDto()).build() : null)
+                .etat(classeDto.isEtatDto())
                 .build();
     }
 
@@ -28,6 +29,7 @@ public class ClasseMapper {
                 .mensualiteDto(classe.getMensualite())
                 .autresFraisDto(classe.getAutresFrais())
                 .filiereIdDto(classe.getFiliere() != null ? classe.getFiliere().getId() : null)
+                .etatDto(classe.isEtat())
                 .build();
     }
 }

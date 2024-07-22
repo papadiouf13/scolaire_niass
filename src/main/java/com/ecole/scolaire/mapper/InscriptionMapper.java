@@ -24,31 +24,32 @@ public class InscriptionMapper {
     public InscriptionDto entityInscriptionToInscriptionDto(Inscription inscription) {
         return InscriptionDto.builder()
                 .idDto(inscription.getId())
-                .etudiantId(inscription.getEtudiant().getId())
-                .classeId(inscription.getClasse().getId())
-                .periodeInscriptionId(inscription.getPeriodeInscription().getId())
-                .date(inscription.getDate())
+                .etudiantIdDto(inscription.getEtudiant().getId())
+                .classeIdDto(inscription.getClasse().getId())
+                .periodeInscriptionIdDto(inscription.getPeriodeInscription().getId())
+                .dateDto(inscription.getDate())
+                .etatDto(inscription.isEtat())
                 .build();
     }
 
     public Inscription inscriptionDtoToEntityInscription(InscriptionDto inscriptionDto) {
         Inscription inscription = new Inscription();
         inscription.setId(inscriptionDto.getIdDto());
-        inscription.setDate(inscriptionDto.getDate());
-        // Handle mapping for related entities
-        if (inscriptionDto.getClasseId() != null) {
+        inscription.setDate(inscriptionDto.getDateDto());
+        inscription.setEtat(inscriptionDto.isEtatDto());
+        if (inscriptionDto.getClasseIdDto() != null) {
             Classe classe = new Classe();
-            classe.setId(inscriptionDto.getClasseId());
+            classe.setId(inscriptionDto.getClasseIdDto());
             inscription.setClasse(classe);
         }
-        if (inscriptionDto.getEtudiantId() != null) {
+        if (inscriptionDto.getEtudiantIdDto() != null) {
             Etudiant etudiant = new Etudiant();
-            etudiant.setId(inscriptionDto.getEtudiantId());
+            etudiant.setId(inscriptionDto.getEtudiantIdDto());
             inscription.setEtudiant(etudiant);
         }
-        if (inscriptionDto.getPeriodeInscriptionId() != null) {
+        if (inscriptionDto.getPeriodeInscriptionIdDto() != null) {
             PeriodeInscription periodeInscription = new PeriodeInscription();
-            periodeInscription.setId(inscriptionDto.getPeriodeInscriptionId());
+            periodeInscription.setId(inscriptionDto.getPeriodeInscriptionIdDto());
             inscription.setPeriodeInscription(periodeInscription);
         }
         return inscription;

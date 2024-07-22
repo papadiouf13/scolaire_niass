@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class FiliereDto {
     private Long idDto;
     private String libelleDto;
+    private boolean etatDto;
 }

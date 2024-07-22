@@ -47,9 +47,9 @@ public class EtudiantServiceImpl implements EtudiantService{
 
     @Override
     public List<EtudiantDto> getAllEtudiants() {
-        List<Etudiant> etudiants = etudiantRepository.findAll();
+        List<Etudiant> etudiants = etudiantRepository.findByEtatFalse();
         return etudiants.stream()
-                .map(etudiantMapper::toDto) // Utilisation de method reference pour la conversion
+                .map(etudiantMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -59,5 +59,28 @@ public class EtudiantServiceImpl implements EtudiantService{
         return etudiants.stream()
                 .map(etudiantMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteEtudiant(Long id) {
+        Etudiant etudiant = etudiantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Etudiant n'existe pas avec l'id : " + id));
+        etudiant.setEtat(true);
+        etudiantRepository.save(etudiant);
+    }
+
+    @Override
+    public void updateEtudiant(Long id, EtudiantDto etudiantDto) {
+        Etudiant etudiant = etudiantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Etudiant not found with id: " + id));
+        etudiant.setPrenom(etudiantDto.getPrenomDto());
+        etudiant.setNom(etudiantDto.getNomDto());
+        etudiant.setTelephone(etudiantDto.getTelephoneDto());
+        etudiant.setEmail(etudiantDto.getEmailDto());
+        etudiant.setAdresse(etudiantDto.getAdresseDto());
+        etudiant.setDateNaissance(etudiantDto.getDateNaissanceDto());
+        etudiant.setEtat(etudiantDto.isEtatDto());
+
+        etudiantRepository.save(etudiant);
     }
 }

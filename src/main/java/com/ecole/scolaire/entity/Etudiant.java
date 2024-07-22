@@ -29,4 +29,6 @@ public class Etudiant {
     @JsonBackReference
     @OneToMany(mappedBy = "etudiant")
     private List<Inscription> inscriptions;
+    @Column(columnDefinition = "boolean default false")
+    private boolean etat;
 }

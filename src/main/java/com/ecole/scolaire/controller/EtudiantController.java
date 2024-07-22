@@ -35,4 +35,24 @@ public class EtudiantController {
         }
         return new ResponseEntity<>(etudiants, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEtudiant(@PathVariable Long id) {
+        try {
+            etudiantService.deleteEtudiant(id);
+            return ResponseEntity.ok("Etudiant supprimé avec succès.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateEtudiant(@PathVariable Long id, @RequestBody EtudiantDto etudiantDto) {
+        try {
+            etudiantService.updateEtudiant(id, etudiantDto);
+            return ResponseEntity.ok("Etudiant mis à jour avec succès.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
 }

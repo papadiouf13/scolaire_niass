@@ -10,4 +10,5 @@ public interface ClasseService {
     List<ClasseDto> getAllClasses();
     Classe updateClasse(Long id, ClasseDto classeDto);
     void deleteClasse(Long id);
+    List<ClasseDto> getClassesByFiliere(Long filiereId);
 }

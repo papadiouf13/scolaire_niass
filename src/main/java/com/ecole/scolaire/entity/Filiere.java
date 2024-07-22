@@ -24,5 +24,7 @@ public class Filiere {
     @OneToMany(mappedBy = "filiere", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Classe> classes;
+    @Column(columnDefinition = "boolean default false")
+    private boolean etat;
 
 }
