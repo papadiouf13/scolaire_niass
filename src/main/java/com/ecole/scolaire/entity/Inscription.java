@@ -1,5 +1,7 @@
 package com.ecole.scolaire.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -32,6 +36,11 @@ public class Inscription {
 
     @ManyToOne
     @JoinColumn(name = "periode_inscription_id")
+    @JsonBackReference
     private PeriodeInscription periodeInscription;
+
+    @OneToMany(mappedBy = "inscription", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Paiement> paiements;
 
 }

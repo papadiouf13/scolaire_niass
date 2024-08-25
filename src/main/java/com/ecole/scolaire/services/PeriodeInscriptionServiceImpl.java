@@ -2,6 +2,7 @@ package com.ecole.scolaire.services;
 
 import com.ecole.scolaire.dtos.PeriodeInscriptionDto;
 import com.ecole.scolaire.entity.PeriodeInscription;
+import com.ecole.scolaire.exceptions.GeneralExceptions;
 import com.ecole.scolaire.exceptions.ValidationExceptions;
 import com.ecole.scolaire.mapper.PeriodeInscriptionMapper;
 import com.ecole.scolaire.repository.PeriodeInscriptionRepository;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -20,6 +23,20 @@ public class PeriodeInscriptionServiceImpl implements PeriodeInscriptionService{
     @Autowired
     private PeriodeInscriptionMapper periodeInscriptionMapper;
 
+
+    @Override
+    public List<PeriodeInscriptionDto> getAllPeriodesInscription() {
+        return periodeInscriptionRepository.findAll().stream()
+                .map(periodeInscriptionMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public PeriodeInscriptionDto findById(Long id) {
+        PeriodeInscription periodeInscription = periodeInscriptionRepository.findById(id)
+                .orElseThrow(() -> new GeneralExceptions("Période d'inscription non trouvée avec l'id " + id));
+        return periodeInscriptionMapper.toDto(periodeInscription);
+    }
     @Override
     public PeriodeInscription addPeriodeInscription(PeriodeInscriptionDto periodeInscriptionDto) {
         String anneeScolaire = periodeInscriptionDto.getAnneeScolaireDto();
@@ -66,12 +83,10 @@ public class PeriodeInscriptionServiceImpl implements PeriodeInscriptionService{
             throw new ValidationExceptions.InvalidAnneeScolaireException("Format d'année scolaire invalide. Utilisez le format 'YYYY-YYYY'.");
         }
 
-        // Valider que l'année scolaire est comprise entre dateDebut et dateFin
         if (anneeDebutScolaire < yearDebut || anneeFinScolaire < yearFin) {
             throw new ValidationExceptions.InvalidAnneeScolaireException("Revoyez l'année scolaire pour cette période. Elle doit être comprise entre les dates de début et de fin.");
         }
 
-        // Vérifier qu'il n'existe pas déjà une période d'inscription avec statut true
         if (statut && periodeInscriptionRepository.existsByStatutTrue()) {
             throw new ValidationExceptions.InvalidDateException("Une autre période d'inscription est déjà active.");
         }

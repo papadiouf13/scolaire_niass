@@ -5,6 +5,7 @@ import com.ecole.scolaire.entity.Filiere;
 import com.ecole.scolaire.exceptions.AlreadyExistsExceptions;
 import com.ecole.scolaire.exceptions.ValidationExceptions;
 import com.ecole.scolaire.services.FiliereService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @CrossOrigin("*")
 @RestController
+@Tag(name = "Filiere", description = "Filiere API")
 @RequestMapping("/api/filieres")
 public class FiliereController {
     @Autowired

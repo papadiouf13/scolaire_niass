@@ -50,4 +50,23 @@ public class InscriptionController {
     public ResponseEntity<String> handleGeneralException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue. Veuillez réessayer plus tard.");
     }
+
+    @GetMapping("/classe/{classeId}")
+    public ResponseEntity<List<InscriptionDto>> getAllInscriptionsByClasse(@PathVariable Long classeId) {
+        List<InscriptionDto> inscriptions = inscriptionService.getAllInscriptionsByClasse(classeId);
+        return ResponseEntity.ok(inscriptions);
+    }
+
+    @GetMapping("/etudiant/{matricule}")
+    public ResponseEntity<Object> getInscriptionsByEtudiant(@PathVariable String matricule) {
+        try {
+            List<InscriptionDto> inscriptionDtos = inscriptionService.getInscriptionByEtudiant(matricule);
+            return ResponseEntity.ok(inscriptionDtos);
+        } catch (GeneralExceptions e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue. Veuillez réessayer plus tard.");
+        }
+    }
+
 }

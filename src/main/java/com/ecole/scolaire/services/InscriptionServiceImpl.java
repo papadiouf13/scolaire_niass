@@ -18,8 +18,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 @Service
-public class InscriptionServiceImpl implements InscriptionService{
+public class InscriptionServiceImpl implements InscriptionService {
+
     @Autowired
     private InscriptionRepository inscriptionRepository;
 
@@ -94,5 +96,23 @@ public class InscriptionServiceImpl implements InscriptionService{
     @Override
     public InscriptionMapper getMapper() {
         return inscriptionMapper;
+    }
+
+    @Override
+    public List<InscriptionDto> getAllInscriptionsByClasse(Long classeId) {
+        return inscriptionRepository.findByClasseId(classeId).stream()
+                .map(inscriptionMapper::entityInscriptionToInscriptionDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InscriptionDto> getInscriptionByEtudiant(String matricule) {
+        List<Inscription> inscriptions = inscriptionRepository.findByEtudiantMatricule(matricule);
+        if (inscriptions.isEmpty()) {
+            throw new GeneralExceptions("Inscription non trouvée pour l'étudiant avec matricule " + matricule);
+        }
+        return inscriptions.stream()
+                .map(inscriptionMapper::entityInscriptionToInscriptionDto)
+                .collect(Collectors.toList());
     }
 }

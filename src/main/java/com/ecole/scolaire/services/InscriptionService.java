@@ -9,5 +9,9 @@ import java.util.List;
 public interface InscriptionService {
     Inscription saveInscription(InscriptionDto inscriptionDto);
     List<InscriptionDto> getAllInscriptions();
-    InscriptionMapper getMapper(); // Add this method declaration
+    InscriptionMapper getMapper();
+    List<InscriptionDto> getAllInscriptionsByClasse(Long classeId);
+    //InscriptionDto getInscriptionByEtudiant(String matricule);
+    List<InscriptionDto> getInscriptionByEtudiant(String matricule);
+
 }

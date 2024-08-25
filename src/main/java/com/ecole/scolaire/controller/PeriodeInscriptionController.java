@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/periodesIns")
@@ -21,4 +23,18 @@ public class PeriodeInscriptionController {
         PeriodeInscription periodeInscription = periodeInscriptionService.addPeriodeInscription(periodeInscriptionDto);
         return ResponseEntity.status(201).body(periodeInscription);
     }
+
+    @GetMapping
+    public ResponseEntity<List<PeriodeInscriptionDto>> getAllPeriodesInscription() {
+        List<PeriodeInscriptionDto> periodesInscription = periodeInscriptionService.getAllPeriodesInscription();
+        return ResponseEntity.ok(periodesInscription);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PeriodeInscriptionDto> getPeriodeInscriptionById(@PathVariable Long id) {
+        PeriodeInscriptionDto periodeInscriptionDto = periodeInscriptionService.findById(id);
+        return ResponseEntity.ok(periodeInscriptionDto);
+    }
+
+
 }
