@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: scolaire_niass
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: ''
+    url: jdbc:mysql://localhost:3306/projet_scolaire_spring_db
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+springdoc:
+  api-docs:
+    path: /open-api
+  swagger-ui:
+    operationsSorter: method
+    path: /docs
+app:
+  keycloak:
+    admin:
+      password: mamadou
+      username: mamadou
+    client-id: scolarite-projet
+    client-secret: A29GY1fkYYZZM95lmPE6idQpqqDxMyz7
+    grant-type: password
+    login:
+      url: http://localhost:8083/realms/projet-scolaire221-niass-realm/protocol/openid-connect/token
+    realm:
+      name: projet-scolaire221-niass-realm
+    server:
+      url: http://localhost:8083
