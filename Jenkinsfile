@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout From Git') {
             steps {
-                git branch: 'main', url: 'https://github.com/papadiouf13/scolaire_niass.git'
+                git branch: 'main', url: 'https://github.com/diouf173/scolaire_niass.git'
             }
         }
         stage('Clean') {
@@ -35,10 +35,20 @@ pipeline {
                 }
             }
         }
-        stage('Quality Gate') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                    sh 'docker build -t diouf173/scolaire_niass:latest .'
+                }
+            }
+        }
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: 'docker-hub-credentials', variable: 'DOCKER_PASSWORD')]) {
+                    sh """
+                    echo $DOCKER_PASSWORD | docker login -u diouf173 --password-stdin
+                    docker push diouf173/scolaire_niass:latest
+                    """
                 }
             }
         }
