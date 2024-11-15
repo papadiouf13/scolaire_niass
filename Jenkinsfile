@@ -26,9 +26,12 @@ pipeline {
         stage('Sonarqube Analysis') {
             steps {
                 withSonarQubeEnv('sonar-scanner') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=scolaire_niass \
-                    -Dsonar.java.binaries=. \
-                    -Dsonar.projectKey=scolaire_niass '''
+                    withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                        sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=scolaire_niass \
+                        -Dsonar.java.binaries=. \
+                        -Dsonar.projectKey=scolaire_niass \
+                        -Dsonar.login=$SONAR_TOKEN '''
+                    }
                 }
             }
         }
