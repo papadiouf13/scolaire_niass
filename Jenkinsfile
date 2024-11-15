@@ -5,7 +5,7 @@ pipeline {
         maven 'maven3'
     }
     environment {
-        SCANNER_HOME = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+        SCANNER_HOME=tool 'sonar-scanner'
     }
     stages {
         stage('Checkout From Git') {
@@ -23,21 +23,22 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Sonarqube Analysis') {
+        stage('Sonarqube Analysis ') {
             steps {
                 withSonarQubeEnv('sonar-server') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=scolaire_niass \
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=scolaire_niass \
                     -Dsonar.java.binaries=. \
-                    -Dsonar.projectKey=scolaire_niass'''
+                    -Dsonar.projectKey=scolaire_niass '''
                 }
             }
         }
-        stage('Quality Gate') {
+        stage('quality gate') {
             steps {
                 script {
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                 }
             }
         }
+
     }
 }
