@@ -3,7 +3,9 @@ pipeline {
     tools {
         jdk 'jdk17'
         maven 'maven3'
-        sonarScanner 'sonar-scanner' // Ajoutez sonarScanner ici
+    }
+    environment {
+        SCANNER_HOME = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
     }
     stages {
         stage('Checkout From Git') {
@@ -24,7 +26,9 @@ pipeline {
         stage('Sonarqube Analysis') {
             steps {
                 withSonarQubeEnv('sonar-server') {
-                    sh 'sonar-scanner -Dsonar.projectName=scolaire_niass -Dsonar.java.binaries=. -Dsonar.projectKey=scolaire_niass'
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=scolaire_niass \
+                    -Dsonar.java.binaries=. \
+                    -Dsonar.projectKey=scolaire_niass'''
                 }
             }
         }
