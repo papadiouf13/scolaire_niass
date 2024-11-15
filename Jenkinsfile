@@ -23,9 +23,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    withEnv(['DOCKER_BUILDKIT=1']) {
-                        sh 'docker build -t diouf173/scolaire_niass:latest .'
-                    }
+                    sh 'DOCKER_BUILDKIT=0 docker build -t diouf173/scolaire_niass:latest .'
                 }
             }
         }
