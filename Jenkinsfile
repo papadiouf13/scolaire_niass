@@ -23,22 +23,21 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Sonarqube Analysis ') {
+        stage('Sonarqube Analysis') {
             steps {
-                withSonarQubeEnv('sonar-server') {
+                withSonarQubeEnv('sonar-scanner') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=scolaire_niass \
                     -Dsonar.java.binaries=. \
                     -Dsonar.projectKey=scolaire_niass '''
                 }
             }
         }
-        stage('quality gate') {
+        stage('Quality Gate') {
             steps {
                 script {
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                 }
             }
         }
-
     }
 }
