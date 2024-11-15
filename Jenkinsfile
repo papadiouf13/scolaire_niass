@@ -25,6 +25,11 @@ pipeline {
                 sh 'mvn package'
             }
         }
+        stage('List Target Directory') {
+            steps {
+                sh 'ls -la target'
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
