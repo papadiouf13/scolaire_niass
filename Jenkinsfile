@@ -3,9 +3,7 @@ pipeline {
     tools {
         jdk 'jdk17'
         maven 'maven3'
-    }
-    environment {
-       sonarScanner 'sonar-scanner'
+        sonarScanner 'sonar-scanner' // Ajoutez sonarScanner ici
     }
     stages {
         stage('Checkout From Git') {
@@ -23,22 +21,19 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Sonarqube Analysis ') {
+        stage('Sonarqube Analysis') {
             steps {
                 withSonarQubeEnv('sonar-server') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=scolaire_niass \
-                    -Dsonar.java.binaries=. \
-                    -Dsonar.projectKey=scolaire_niass '''
+                    sh 'sonar-scanner -Dsonar.projectName=scolaire_niass -Dsonar.java.binaries=. -Dsonar.projectKey=scolaire_niass'
                 }
             }
         }
-        stage('quality gate') {
+        stage('Quality Gate') {
             steps {
                 script {
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                 }
             }
         }
-
     }
 }
