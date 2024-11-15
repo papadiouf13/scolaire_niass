@@ -27,9 +27,9 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonar-scanner') {
                     withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                        sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=scolaire_niass \
+                        sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=examen \
                         -Dsonar.java.binaries=. \
-                        -Dsonar.projectKey=scolaire_niass \
+                        -Dsonar.projectKey=examen \
                         -Dsonar.login=$SONAR_TOKEN '''
                     }
                 }
