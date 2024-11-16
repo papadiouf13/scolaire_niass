@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Pousser l’image Docker') {
             steps {
-                withCredentials([string(credentialsId: 'docker-hub-credentials', variable: 'DOCKER_HUB_TOKEN')]) {
+                withCredentials([string(credentialsId: 'dockerhub-credentials', variable: 'DOCKER_HUB_TOKEN')]) {
                     sh '''
                     echo $DOCKER_HUB_TOKEN | docker login -u diouf173 --password-stdin
                     docker push diouf173/scolaire_niass:latest
