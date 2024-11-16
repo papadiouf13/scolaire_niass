@@ -1,3 +1,4 @@
+# Jenkinsfile
 pipeline {
     agent any
     tools {
@@ -5,39 +6,34 @@ pipeline {
         maven 'maven3'
     }
     stages {
-        stage('Checkout From Git') {
+        stage('Récupérer depuis Git') {
             steps {
                 git branch: 'main', url: 'https://github.com/papadiouf13/scolaire_niass.git'
             }
         }
-        stage('Clean') {
+        stage('Nettoyer') {
             steps {
                 sh 'mvn clean'
             }
         }
-        stage('Test') {
+        stage('Tester') {
             steps {
                 sh 'mvn test'
             }
         }
-        stage('Package') {
+        stage('Emballer') {
             steps {
                 sh 'mvn package'
             }
         }
-        stage('List Target Directory') {
-            steps {
-                sh 'ls -la target'
-            }
-        }
-        stage('Build Docker Image') {
+        stage('Construire l’image Docker') {
             steps {
                 script {
-                    sh 'DOCKER_BUILDKIT=0 docker build -t diouf173/scolaire_niass:latest .'
+                    sh 'docker build -t diouf173/scolaire_niass:latest .'
                 }
             }
         }
-        stage('Push Docker Image') {
+        stage('Pousser l’image Docker') {
             steps {
                 withCredentials([string(credentialsId: 'docker-hub-credentials', variable: 'DOCKER_HUB_TOKEN')]) {
                     sh '''
